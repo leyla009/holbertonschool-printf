@@ -65,3 +65,17 @@ int _printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
+int _printf(const char *format, ...)
+{
+    /* 1. Define the array of available specifiers */
+    spec_t specs[] = {
+        {'c', print_char},
+        {'s', print_string},
+        {'%', print_percent},
+        {'d', print_int},
+        {'i', print_int},
+        {0, NULL} /* Struct terminator */
+    };
+
+    /* ... rest of your _printf logic ... */
+}
