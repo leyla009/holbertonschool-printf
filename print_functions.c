@@ -1,35 +1,42 @@
 #include "main.h"
 
 /**
- * print_char - Prints a character
+ * print_char - Prints a character with width padding
  * @args: va_list
  * @flags: flags
- * @length: length
- * @width: width
- * Return: number of chars printed
+ * @width: field width
+ * @length: length modifier
+ * Return: number of characters printed
  */
-int print_char(va_list args, int flags, int length, int width)
+int print_char(va_list args, int flags, int width, int length)
 {
 	int count = 0;
-	(void)flags; (void)length;
+	char c = va_arg(args, int);
 
+	(void)flags;
+	(void)length;
+
+	/* Write leading spaces if width > 1 */
 	while (width > 1)
 	{
 		count += _putchar(' ');
 		width--;
 	}
-	count += _putchar(va_arg(args, int));
+
+	count += _putchar(c);
 	return (count);
 }
 
 /**
- * print_string - Prints a string
+ * print_string - Prints a string with width padding
  */
-int print_string(va_list args, int flags, int length, int width)
+int print_string(va_list args, int flags, int width, int length)
 {
 	char *s = va_arg(args, char *);
 	int i, len = 0, count = 0;
-	(void)flags; (void)length;
+
+	(void)flags;
+	(void)length;
 
 	if (!s)
 		s = "(null)";
@@ -37,6 +44,7 @@ int print_string(va_list args, int flags, int length, int width)
 	while (s[len])
 		len++;
 
+	/* Print leading spaces for width padding */
 	while (width > len)
 	{
 		count += _putchar(' ');
@@ -50,32 +58,42 @@ int print_string(va_list args, int flags, int length, int width)
 }
 
 /**
- * print_percent - Prints percent sign
+ * print_percent - Prints a percent sign
  */
-int print_percent(va_list args, int flags, int length, int width)
+int print_percent(va_list args, int flags, int width, int length)
 {
-	(void)args; (void)flags; (void)length; (void)width;
+	(void)args;
+	(void)flags;
+	(void)width;
+	(void)length;
+
 	return (_putchar('%'));
 }
 
 /**
- * print_binary - Prints binary
+ * print_binary - Prints unsigned int in binary
  */
-int print_binary(va_list args, int flags, int length, int width)
+int print_binary(va_list args, int flags, int width, int length)
 {
 	unsigned int n = va_arg(args, unsigned int);
 	int i = 0, count = 0;
 	char binary[64];
-	(void)flags; (void)length; (void)width;
+
+	(void)flags;
+	(void)width;
+	(void)length;
 
 	if (n == 0)
 		return (_putchar('0'));
+
 	while (n > 0)
 	{
 		binary[i++] = (n % 2) + '0';
 		n /= 2;
 	}
+
 	for (i--; i >= 0; i--)
 		count += _putchar(binary[i]);
+
 	return (count);
 }

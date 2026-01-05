@@ -1,12 +1,7 @@
 #include "main.h"
 
 /**
- * print_int - Prints an integer with width padding
- * @args: va_list
- * @flags: flags
- * @width: field width
- * @length: length modifier
- * Return: number of chars printed
+ * print_int - Prints an integer with width, flags, and length
  */
 int print_int(va_list args, int flags, int width, int length)
 {
@@ -21,26 +16,23 @@ int print_int(va_list args, int flags, int width, int length)
 	num = (n < 0) ? -n : n;
 	temp = num;
 
-	/* Calculate content length */
 	if (num == 0) n_len = 1;
 	while (temp > 0) { temp /= 10; n_len++; }
-
-	/* Account for sign character (+, -, or space) */
 	if (n < 0 || (flags & 1) || (flags & 2)) n_len++;
 
-	/* 1. Print Padding FIRST */
+	/* Print Padding FIRST */
 	while (width > n_len)
 	{
 		count += _putchar(' ');
 		width--;
 	}
 
-	/* 2. Print Sign */
+	/* Print Sign */
 	if (n < 0) count += _putchar('-');
 	else if (flags & 1) count += _putchar('+');
 	else if (flags & 2) count += _putchar(' ');
 
-	/* 3. Print Digits */
+	/* Print Digits */
 	while (num / div > 9) div *= 10;
 	while (div != 0)
 	{
