@@ -100,5 +100,13 @@ int print_hex_upp(va_list args);
  * Return: Number of characters printed
  */
 int print_S(va_list args);
+/* --- Task 7: Pointer (%p) --- */
+
+/**
+ * print_pointer - Prints the address of a pointer in hex
+ * @args: va_list containing the pointer
+ * Return: Number of characters printed
+ */
+int print_pointer(va_list args);
 
 #endif /* MAIN_H */
