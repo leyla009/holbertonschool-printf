@@ -34,4 +34,7 @@ int print_octal(va_list args);
 int print_hex_low(va_list args);
 int print_hex_upp(va_list args);
 
+/* New helper for Task 5 */
+void flush_buffer(char *buffer, int *buff_ind);
+
 #endif

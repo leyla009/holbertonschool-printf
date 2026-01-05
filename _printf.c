@@ -46,3 +46,15 @@ int _printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
+
+/**
+ * flush_buffer - Prints buffer contents to stdout and resets index
+ * @buffer: array of chars
+ * @buff_ind: pointer to current index
+ */
+void flush_buffer(char *buffer, int *buff_ind)
+{
+	if (*buff_ind > 0)
+		write(1, buffer, *buff_ind);
+	*buff_ind = 0;
+}
