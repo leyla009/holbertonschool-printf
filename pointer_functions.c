@@ -15,8 +15,9 @@ int print_pointer(va_list args, int flags, int length, int width)
 	int i = 0, count = 0;
 	(void)flags;
 	(void)length;
+	(void)width;
 
-	if (p == NULL)
+	if (!p)
 	{
 		char *s = "(nil)";
 		while (s[count])
@@ -28,18 +29,11 @@ int print_pointer(va_list args, int flags, int length, int width)
 	count += _putchar('0');
 	count += _putchar('x');
 
-	if (addr == 0)
-	{
-		count += _putchar('0');
-		return (count);
-	}
-
 	while (addr > 0)
 	{
 		buffer[i++] = hex[addr % 16];
 		addr /= 16;
 	}
-
 	for (i--; i >= 0; i--)
 		count += _putchar(buffer[i]);
 

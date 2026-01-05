@@ -13,6 +13,7 @@ int print_S(va_list args, int flags, int length, int width)
 	char *hex = "0123456789ABCDEF";
 	(void)flags;
 	(void)length;
+	(void)width;
 
 	if (!s)
 		s = "(null)";
