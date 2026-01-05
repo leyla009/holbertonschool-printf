@@ -3,23 +3,28 @@
 /**
  * print_char - Prints a character
  * @args: va_list
- * @flags: active flags (unused)
- * Return: 1
+ * @flags: flags
+ * @length: length
+ * @width: width
+ * Return: number of chars printed
  */
-int print_char(va_list args, int flags, int length)
+int print_char(va_list args, int flags, int length, int width)
 {
-	(void)flags;
-	(void)length;
-	return (_putchar(va_arg(args, int)));
+	int count = 0;
+	(void)flags; (void)length;
+
+	while (width > 1)
+	{
+		count += _putchar(' ');
+		width--;
+	}
+	count += _putchar(va_arg(args, int));
+	return (count);
 }
 
 /**
  * print_string - Prints a string
- * @args: va_list
- * @flags: active flags (unused)
- * Return: number of chars printed
  */
-
 int print_string(va_list args, int flags, int length, int width)
 {
 	char *s = va_arg(args, char *);
@@ -32,7 +37,6 @@ int print_string(va_list args, int flags, int length, int width)
 	while (s[len])
 		len++;
 
-	/* Padding logic */
 	while (width > len)
 	{
 		count += _putchar(' ');
@@ -44,33 +48,26 @@ int print_string(va_list args, int flags, int length, int width)
 
 	return (count);
 }
+
 /**
- * print_percent - Prints %
- * @args: va_list
- * @flags: active flags (unused)
- * Return: 1
+ * print_percent - Prints percent sign
  */
-int print_percent(va_list args, int flags, int length)
+int print_percent(va_list args, int flags, int length, int width)
 {
-	(void)args;
-	(void)flags;
-	(void)length;
+	(void)args; (void)flags; (void)length; (void)width;
 	return (_putchar('%'));
 }
 
 /**
  * print_binary - Prints binary
- * @args: va_list
- * @flags: active flags (unused)
- * Return: number of chars printed
  */
-int print_binary(va_list args, int flags, int length)
+int print_binary(va_list args, int flags, int length, int width)
 {
 	unsigned int n = va_arg(args, unsigned int);
 	int i = 0, count = 0;
 	char binary[64];
-	(void)flags;
-	(void)length;
+	(void)flags; (void)length; (void)width;
+
 	if (n == 0)
 		return (_putchar('0'));
 	while (n > 0)

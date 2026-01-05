@@ -6,7 +6,7 @@
  * @flags: active flags (unused)
  * Return: number of chars printed
  */
-int print_S(va_list args, int flags, int length)
+int print_S(va_list args, int flags, int length, int width) 
 {
 	char *s = va_arg(args, char *);
 	int i, count = 0;

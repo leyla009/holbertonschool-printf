@@ -6,7 +6,7 @@
  * @flags: active flags
  * Return: Number of characters printed
  */
-int print_pointer(va_list args, int flags, int length)
+int print_pointer(va_list args, int flags, int length, int width)
 {
 	void *p = va_arg(args, void *);
 	unsigned long int addr;
