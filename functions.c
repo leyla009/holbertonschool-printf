@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * print_char - Prints a character
- * @args: list of arguments
- * Return: 1 (number of chars printed)
+ * print_char - prints a char
+ * @args: va_list
+ * Return: 1
  */
 int print_char(va_list args)
 {
@@ -14,8 +14,8 @@ int print_char(va_list args)
 }
 
 /**
- * print_string - Prints a string
- * @args: list of arguments
+ * print_string - prints a string
+ * @args: va_list
  * Return: number of chars printed
  */
 int print_string(va_list args)
@@ -25,7 +25,6 @@ int print_string(va_list args)
 
 	if (!s)
 		s = "(null)";
-
 	while (s[i])
 	{
 		write(1, &s[i], 1);
@@ -35,8 +34,8 @@ int print_string(va_list args)
 }
 
 /**
- * print_percent - Prints a percent sign
- * @args: list of arguments (unused)
+ * print_percent - prints %
+ * @args: va_list
  * Return: 1
  */
 int print_percent(va_list args)

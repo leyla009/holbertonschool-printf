@@ -1,0 +1,76 @@
+.TH _PRINTF 3 "JANUARY 2026" "Holberton School" "Custom Printf Manual"
+.SH NAME
+_printf \- formatted output conversion
+.SH SYNOPSIS
+.B #include "main.h"
+.sp
+.BI "int _printf(const char *" format ", ...);"
+.SH DESCRIPTION
+The
+.B _printf()
+function produces output according to a
+.I format
+as described below. It mimics the functionality of the standard C library function
+.IR printf (3).
+.PP
+The function writes the output to
+.B stdout
+(standard output stream). It handles a variety of data types passed as additional arguments based on the conversion specifiers found in the 
+.I format 
+string.
+.SS Conversion Specifiers
+A conversion specifier is introduced by the character 
+.B %
+and ends with a conversion specifier character. The following specifiers are supported:
+.TP
+.B c
+The 
+.B int 
+argument is converted to an 
+.B unsigned char
+and the resulting character is written.
+.TP
+.B s
+The 
+.B const char * argument is expected to be a pointer to a string. Characters from the string are written up to (but not including) the terminating null byte. If the pointer is 
+.B NULL
+, the string "(null)" is printed.
+.TP
+.B %
+A literal 
+.B % 
+is written. No argument is converted.
+.TP
+.B d, i
+The 
+.B int 
+argument is converted to signed decimal notation.
+.SH RETURN VALUE
+Upon successful return, 
+.B _printf() 
+returns the number of characters printed (excluding the null byte used to end output to strings).
+.PP
+If the format string is 
+.B NULL 
+or if a trailing 
+.B % 
+is encountered without a specifier, the function returns \-1.
+.SH EXAMPLES
+.B _printf("Character:[%c]\\n", 'H');
+.br
+Output: Character:[H]
+.sp
+.B _printf("String:[%s]\\n", "I am a string!");
+.br
+Output: String:[I am a string!]
+.sp
+.B _printf("Integer:[%d]\\n", 1024);
+.br
+Output: Integer:[1024]
+.SH SEE ALSO
+.IR printf (3)
+.IR write (2)
+.SH BUGS
+No known bugs at the moment.
+.SH AUTHOR
+This custom _printf was implemented as part of the Holberton School curriculum.

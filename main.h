@@ -5,17 +5,24 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+/**
+ * struct specifier - Struct for specifiers
+ * @spec: The character (c, s, d, etc.)
+ * @f: The function pointer associated
+ */
 typedef struct specifier
 {
-    char spec;
-    int (*f)(va_list);
+	char spec;
+	int (*f)(va_list);
 } spec_t;
 
 int _printf(const char *format, ...);
+
+/* Helper Prototypes */
 int print_char(va_list args);
 int print_string(va_list args);
 int print_percent(va_list args);
 int print_int(va_list args);
-int recursive_int(unsigned int num); /* Add this line */
+int recursive_int(unsigned int num);
 
-#endif
+#endif /* MAIN_H */
