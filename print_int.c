@@ -7,25 +7,35 @@
  * @length: l or h
  * Return: count
  */
-int print_int(va_list args, int flags, int length)
+int print_int(va_list args, int flags, int length, int width)
 {
 	long int n;
-	unsigned long int num, div = 1;
-	int count = 0;
+	unsigned long int num, temp;
+	int count = 0, n_len = 0;
 
 	if (length == 1) n = va_arg(args, long int);
 	else if (length == 2) n = (short int)va_arg(args, int);
 	else n = va_arg(args, int);
 
-	if (n < 0)
+	num = (n < 0) ? -n : n;
+	temp = num;
+	
+	/* Calculate number length */
+	if (num == 0) n_len = 1;
+	while (temp > 0) { temp /= 10; n_len++; }
+	if (n < 0 || (flags & 1) || (flags & 2)) n_len++;
+
+	/* Print Width Padding */
+	while (width > n_len)
 	{
-		count += _putchar('-');
-		num = -n;
+		count += _putchar(' ');
+		width--;
 	}
-	else
-	{
-		if (flags & 1) count += _putchar('+');
-		else if (flags & 2) count += _putchar(' ');
+
+	/* Actual printing */
+	if (n < 0) count += _putchar('-');
+	else if (flags & 1) count += _putchar('+');
+	else if (flags & 2) count += _putchar(' ');
 		num = n;
 	}
 

@@ -19,19 +19,31 @@ int print_char(va_list args, int flags, int length)
  * @flags: active flags (unused)
  * Return: number of chars printed
  */
-int print_string(va_list args, int flags, int length)
+
+int print_string(va_list args, int flags, int length, int width)
 {
 	char *s = va_arg(args, char *);
-	int i, count = 0;
-	(void)flags;
-	(void)length;
+	int i, len = 0, count = 0;
+	(void)flags; (void)length;
+
 	if (!s)
 		s = "(null)";
+
+	while (s[len])
+		len++;
+
+	/* Padding logic */
+	while (width > len)
+	{
+		count += _putchar(' ');
+		width--;
+	}
+
 	for (i = 0; s[i]; i++)
 		count += _putchar(s[i]);
+
 	return (count);
 }
-
 /**
  * print_percent - Prints %
  * @args: va_list

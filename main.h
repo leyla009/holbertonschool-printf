@@ -13,24 +13,24 @@
 typedef struct specifier
 {
 	char spec;
-	int (*f)(va_list, int, int);
+	int (*f)(va_list, int, int, int);
 } spec_t;
 
 /* Core Functions */
 int _putchar(char c);
 int _printf(const char *format, ...);
 
-/* Specifier Functions (All with flags and length) */
-int print_char(va_list args, int flags, int length);
-int print_string(va_list args, int flags, int length);
-int print_percent(va_list args, int flags, int length);
-int print_int(va_list args, int flags, int length);
-int print_binary(va_list args, int flags, int length);
-int print_unsigned(va_list args, int flags, int length);
-int print_octal(va_list args, int flags, int length);
-int print_hex_low(va_list args, int flags, int length);
-int print_hex_upp(va_list args, int flags, int length);
-int print_S(va_list args, int flags, int length);
-int print_pointer(va_list args, int flags, int length);
+/* Specifier Functions (All with flags,  length and width) */
+int print_char(va_list args, int flags, int length, int width);
+int print_string(va_list args, int flags, int length, int width);
+int print_percent(va_list args, int flags, int length, int width);
+int print_int(va_list args, int flags, int length, int width);
+int print_binary(va_list args, int flags, int length, int width);
+int print_unsigned(va_list args, int flags, int length, int width);
+int print_octal(va_list args, int flags, int length, int width);
+int print_hex_low(va_list args, int flags, int length, int width);
+int print_hex_upp(va_list args, int flags, int length, int width);
+int print_S(va_list args, int flags, int length, int width);
+int print_pointer(va_list args, int flags, int length, int width);
 
 #endif
