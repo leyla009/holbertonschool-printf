@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- * print_int - Prints an integer with field width, flags, and length modifiers
- * @args: va_list of arguments
+ * print_int - Prints an integer with width, flags, and length modifiers
+ * @args: va_list
  * @flags: active flags (+, space)
+ * @length: length (l, h)
  * @width: field width
- * @length: length modifier (l, h)
  * Return: number of characters printed
  */
 int print_int(va_list args, int flags, int length, int width)
@@ -14,7 +14,7 @@ int print_int(va_list args, int flags, int length, int width)
 	unsigned long int num, temp, div = 1;
 	int count = 0, n_len = 0;
 
-	/* 1. Extract the number with length modifier logic */
+	/* 1. Get the number using the length modifier */
 	if (length == 1)
 		n = va_arg(args, long int);
 	else if (length == 2)
@@ -25,30 +25,27 @@ int print_int(va_list args, int flags, int length, int width)
 	num = (n < 0) ? -n : n;
 	temp = num;
 
-	/* 2. Calculate digit length */
+	/* 2. Calculate digit length (must be at least 1 for '0') */
 	if (num == 0)
 		n_len = 1;
-	else
+	while (temp > 0)
 	{
-		while (temp > 0)
-		{
-			temp /= 10;
-			n_len++;
-		}
+		temp /= 10;
+		n_len++;
 	}
 
-	/* 3. Account for sign/space length BEFORE printing padding */
+	/* 3. Account for sign/space in the content length */
 	if (n < 0 || (flags & 1) || (flags & 2))
 		n_len++;
 
-	/* 4. Print Width Padding (Spaces) first for right alignment */
+	/* 4. Print Width Padding (Spaces) BEFORE anything else */
 	while (width > n_len)
 	{
 		count += _putchar(' ');
 		width--;
 	}
 
-	/* 5. Print the Sign (if any) */
+	/* 5. Print the Sign/Space flag */
 	if (n < 0)
 		count += _putchar('-');
 	else if (flags & 1)
@@ -56,7 +53,7 @@ int print_int(va_list args, int flags, int length, int width)
 	else if (flags & 2)
 		count += _putchar(' ');
 
-	/* 6. Print the actual digits */
+	/* 6. Print the actual number digits */
 	while (num / div > 9)
 		div *= 10;
 
