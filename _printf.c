@@ -12,38 +12,39 @@ int _printf(const char *format, ...)
 	spec_t types[] = {
 		{'c', print_char}, {'s', print_string}, {'%', print_percent},
 		{'d', print_int}, {'i', print_int}, {'b', print_binary},
-		{'u', print_unsigned}, {'o', print_octal},
-		{'x', print_hex_low}, {'X', print_hex_upp},
-		{'S', print_S}, {'p', print_pointer}, {0, NULL}
+		{'u', print_unsigned}, {'o', print_octal}, {'x', print_hex_low},
+		{'X', print_hex_upp}, {'S', print_S}, {'p', print_pointer}, {0, NULL}
 	};
 
 	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-
 	va_start(args, format);
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] == '%')
 		{
 			flags = 0;
-			/* Parse flags */
-			while (format[++i] == '+' || format[i] == ' ' || format[i] == '#')
+			while (format[i + 1] == '+' || format[i + 1] == ' ' || format[i + 1] == '#')
 			{
-				if (format[i] == '+') flags |= 1;      /* 1 for + */
-				else if (format[i] == ' ') flags |= 2; /* 2 for space */
-				else if (format[i] == '#') flags |= 4; /* 4 for # */
+				i++;
+				if (format[i] == '+') flags |= 1;
+				if (format[i] == ' ') flags |= 2;
+				if (format[i] == '#') flags |= 4;
 			}
-			
+			i++;
 			for (j = 0; types[j].spec != 0; j++)
 			{
 				if (format[i] == types[j].spec)
 				{
-					/* Pass flags to updated function signature */
 					count += types[j].f(args, flags);
 					break;
 				}
 			}
-			/* ... rest of logic ... */
+			if (types[j].spec == 0)
+			{
+				count += _putchar('%');
+				count += _putchar(format[i]);
+			}
 		}
 		else
 			count += _putchar(format[i]);

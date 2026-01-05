@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * print_int - Prints an integer
- * @args: va_list containing the integer to print
- * @flags: active flags (1: +, 2: space)
- * Return: Number of characters printed
+ * print_int - Prints an integer with + and space flags
+ * @args: va_list
+ * @flags: flag identifiers
+ * Return: number of chars printed
  */
 int print_int(va_list args, int flags)
 {
@@ -13,7 +13,6 @@ int print_int(va_list args, int flags)
 	unsigned int div = 1;
 	int count = 0;
 
-	/* Handle negative numbers */
 	if (n < 0)
 	{
 		count += _putchar('-');
@@ -21,24 +20,20 @@ int print_int(va_list args, int flags)
 	}
 	else
 	{
-		if (flags & 1) /* + flag */
+		if (flags & 1) /* '+' flag */
 			count += _putchar('+');
-		else if (flags & 2) /* space flag */
+		else if (flags & 2) /* ' ' flag */
 			count += _putchar(' ');
 		num = n;
 	}
 
-	/* Calculate divisor */
 	while (num / div > 9)
 		div *= 10;
-
-	/* Print digits using the divisor */
 	while (div != 0)
 	{
 		count += _putchar('0' + (num / div));
 		num %= div;
 		div /= 10;
 	}
-
 	return (count);
 }
