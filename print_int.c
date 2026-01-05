@@ -1,44 +1,39 @@
 #include "main.h"
 
 /**
- * print_int - prints an integer
- * @args: va_list
- * Return: number of chars printed
+ * print_int - Prints an integer
+ * @args: va_list containing the integer to print
+ * Return: Number of characters printed
  */
 int print_int(va_list args)
 {
 	int n = va_arg(args, int);
-	int count = 0;
 	unsigned int num;
+	unsigned int div = 1;
+	int count = 0;
 
+	/* Handle negative numbers */
 	if (n < 0)
 	{
-		write(1, "-", 1);
-		count++;
+		count += _putchar('-');
 		num = -n;
 	}
 	else
+	{
 		num = n;
+	}
 
-	count += recursive_int(num);
-	return (count);
-}
+	/* Calculate divisor */
+	while (num / div > 9)
+		div *= 10;
 
-/**
- * recursive_int - prints digits
- * @num: unsigned int
- * Return: count
- */
-int recursive_int(unsigned int num)
-{
-	int count = 0;
-	char digit;
+	/* Print digits using the divisor */
+	while (div != 0)
+	{
+		count += _putchar('0' + (num / div));
+		num %= div;
+		div /= 10;
+	}
 
-	if (num / 10)
-		count += recursive_int(num / 10);
-
-	digit = (num % 10) + '0';
-	write(1, &digit, 1);
-	count++;
 	return (count);
 }
