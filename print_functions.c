@@ -10,7 +10,8 @@ int print_string(va_list args)
 	char *s = va_arg(args, char *);
 	int i, count = 0;
 
-	if (!s) s = "(null)";
+	if (!s)
+		s = "(null)";
 	for (i = 0; s[i]; i++)
 		count += _putchar(s[i]);
 	return (count);
@@ -28,7 +29,8 @@ int print_binary(va_list args)
 	int i = 0, count = 0;
 	char binary[64];
 
-	if (n == 0) return (_putchar('0'));
+	if (n == 0)
+		return (_putchar('0'));
 	while (n > 0)
 	{
 		binary[i++] = (n % 2) + '0';
