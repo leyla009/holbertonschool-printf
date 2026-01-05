@@ -25,8 +25,10 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
+			/* Reset modifiers for every specifier */
 			flags = 0; width = 0; length = 0;
-			/* 1. Parse Flags */
+
+			/* 1. Parse Flags (+, ' ', #) */
 			while (format[i + 1] == '+' || format[i + 1] == ' ' || format[i + 1] == '#')
 			{
 				i++;
@@ -34,7 +36,8 @@ int _printf(const char *format, ...)
 				else if (format[i] == ' ') flags |= 2;
 				else if (format[i] == '#') flags |= 4;
 			}
-			/* 2. Parse Width */
+
+			/* 2. Parse Width (e.g., %6d or %*d) */
 			if (format[i + 1] == '*')
 			{
 				width = va_arg(args, int);
@@ -48,10 +51,12 @@ int _printf(const char *format, ...)
 					i++;
 				}
 			}
-			/* 3. Parse Length */
+
+			/* 3. Parse Length (l, h) */
 			if (format[i + 1] == 'l') { length = 1; i++; }
 			else if (format[i + 1] == 'h') { length = 2; i++; }
-			/* 4. Match Specifier */
+
+			/* 4. Match and Execute Specifier */
 			i++;
 			for (j = 0; types[j].spec != 0; j++)
 			{
@@ -61,16 +66,19 @@ int _printf(const char *format, ...)
 					break;
 				}
 			}
-			if (types[j].spec == 0) /* No match found */
+			if (types[j].spec == 0) /* No matching specifier found */
 			{
 				if (format[i] == '\0') return (-1);
 				count += _putchar('%');
+				/* Handle cases like "% " or "% +y" */
 				if (format[i - 1] == ' ') count += _putchar(' ');
 				if (format[i] != ' ') count += _putchar(format[i]);
 			}
 		}
 		else
+		{
 			count += _putchar(format[i]);
+		}
 	}
 	_putchar(-1); /* Final buffer flush for Task 5 */
 	va_end(args);

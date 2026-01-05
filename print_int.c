@@ -3,12 +3,12 @@
 /**
  * print_int - Prints an integer with width padding
  * @args: va_list
- * @flags: flags (+, space)
- * @length: length (l, h)
+ * @flags: flags
  * @width: field width
- * Return: total number of chars printed
+ * @length: length modifier
+ * Return: number of chars printed
  */
-int print_int(va_list args, int flags, int length, int width)
+int print_int(va_list args, int flags, int width, int length)
 {
 	long int n;
 	unsigned long int num, temp, div = 1;
@@ -21,26 +21,26 @@ int print_int(va_list args, int flags, int length, int width)
 	num = (n < 0) ? -n : n;
 	temp = num;
 
-	/* Calculate number of digits */
+	/* Calculate content length */
 	if (num == 0) n_len = 1;
 	while (temp > 0) { temp /= 10; n_len++; }
 
-	/* Add 1 for the sign character (+, -, or space) */
+	/* Account for sign character (+, -, or space) */
 	if (n < 0 || (flags & 1) || (flags & 2)) n_len++;
 
-	/* Print Padding (Spaces) BEFORE the number */
+	/* 1. Print Padding FIRST */
 	while (width > n_len)
 	{
 		count += _putchar(' ');
 		width--;
 	}
 
-	/* Print the Sign */
+	/* 2. Print Sign */
 	if (n < 0) count += _putchar('-');
 	else if (flags & 1) count += _putchar('+');
 	else if (flags & 2) count += _putchar(' ');
 
-	/* Print the actual digits */
+	/* 3. Print Digits */
 	while (num / div > 9) div *= 10;
 	while (div != 0)
 	{

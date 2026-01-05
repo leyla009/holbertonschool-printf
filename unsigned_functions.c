@@ -2,9 +2,6 @@
 
 /**
  * get_unsigned_val - Helper to fetch value based on length modifier
- * @args: va_list
- * @len: length modifier
- * Return: unsigned long int
  */
 unsigned long int get_unsigned_val(va_list args, int len)
 {
@@ -16,37 +13,20 @@ unsigned long int get_unsigned_val(va_list args, int len)
 }
 
 /**
- * print_unsigned - Prints an unsigned integer with width
- * @args: va_list
- * @flags: flags
- * @length: length modifier
- * @width: width
- * Return: number of chars printed
+ * print_unsigned - Prints unsigned int with width
  */
-int print_unsigned(va_list args, int flags, int length, int width)
+int print_unsigned(va_list args, int flags, int width, int length)
 {
 	unsigned long int n = get_unsigned_val(args, length);
 	unsigned long int div = 1, temp = n;
 	int count = 0, n_len = 0;
-
 	(void)flags;
 
-	if (n == 0)
-		n_len = 1;
-	while (temp > 0)
-	{
-		temp /= 10;
-		n_len++;
-	}
+	if (n == 0) n_len = 1;
+	while (temp > 0) { temp /= 10; n_len++; }
+	while (width > n_len) { count += _putchar(' '); width--; }
 
-	while (width > n_len)
-	{
-		count += _putchar(' ');
-		width--;
-	}
-
-	while (n / div > 9)
-		div *= 10;
+	while (n / div > 9) div *= 10;
 	while (div != 0)
 	{
 		count += _putchar('0' + (n / div));
@@ -59,7 +39,7 @@ int print_unsigned(va_list args, int flags, int length, int width)
 /**
  * print_octal - Prints octal with width and # flag
  */
-int print_octal(va_list args, int flags, int length, int width)
+int print_octal(va_list args, int flags, int width, int length)
 {
 	unsigned long int n = get_unsigned_val(args, length);
 	unsigned long int temp = n;
@@ -68,7 +48,7 @@ int print_octal(va_list args, int flags, int length, int width)
 
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 8; n_len++; }
-	if (n != 0 && (flags & 4)) n_len++;
+	if (n != 0 && (flags & 4)) n_len++; /* Account for '#' flag '0' prefix */
 
 	while (width > n_len) { count += _putchar(' '); width--; }
 	if (n != 0 && (flags & 4)) count += _putchar('0');
@@ -80,9 +60,9 @@ int print_octal(va_list args, int flags, int length, int width)
 }
 
 /**
- * print_hex_low - Prints lowercase hex
+ * print_hex_low - Prints lowercase hex with width and # flag
  */
-int print_hex_low(va_list args, int flags, int length, int width)
+int print_hex_low(va_list args, int flags, int width, int length)
 {
 	unsigned long int n = get_unsigned_val(args, length);
 	unsigned long int temp = n;
@@ -91,7 +71,7 @@ int print_hex_low(va_list args, int flags, int length, int width)
 
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 16; n_len++; }
-	if (n != 0 && (flags & 4)) n_len += 2;
+	if (n != 0 && (flags & 4)) n_len += 2; /* Account for '0x' */
 
 	while (width > n_len) { count += _putchar(' '); width--; }
 	if (n != 0 && (flags & 4)) { count += _putchar('0'); count += _putchar('x'); }
@@ -103,9 +83,9 @@ int print_hex_low(va_list args, int flags, int length, int width)
 }
 
 /**
- * print_hex_upp - Prints uppercase hex
+ * print_hex_upp - Prints uppercase hex with width and # flag
  */
-int print_hex_upp(va_list args, int flags, int length, int width)
+int print_hex_upp(va_list args, int flags, int width, int length)
 {
 	unsigned long int n = get_unsigned_val(args, length);
 	unsigned long int temp = n;
@@ -114,7 +94,7 @@ int print_hex_upp(va_list args, int flags, int length, int width)
 
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 16; n_len++; }
-	if (n != 0 && (flags & 4)) n_len += 2;
+	if (n != 0 && (flags & 4)) n_len += 2; /* Account for '0X' */
 
 	while (width > n_len) { count += _putchar(' '); width--; }
 	if (n != 0 && (flags & 4)) { count += _putchar('0'); count += _putchar('X'); }
