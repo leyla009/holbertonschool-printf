@@ -1,9 +1,14 @@
 #include "main.h"
 
+/**
+ * _printf - produces output according to a format
+ * @format: character string
+ * Return: number of characters printed
+ */
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i = 0, j, count = 0;
+	int i = 0, j, count = 0, flags;
 	spec_t types[] = {
 		{'c', print_char}, {'s', print_string}, {'%', print_percent},
 		{'d', print_int}, {'i', print_int}, {'b', print_binary},
@@ -16,30 +21,34 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(args, format);
-	while (format && format[i])
+	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] == '%')
 		{
-			i++;
+			flags = 0;
+			/* Parse flags */
+			while (format[++i] == '+' || format[i] == ' ' || format[i] == '#')
+			{
+				if (format[i] == '+') flags |= 1;      /* 1 for + */
+				else if (format[i] == ' ') flags |= 2; /* 2 for space */
+				else if (format[i] == '#') flags |= 4; /* 4 for # */
+			}
+			
 			for (j = 0; types[j].spec != 0; j++)
 			{
 				if (format[i] == types[j].spec)
 				{
-					count += types[j].f(args);
+					/* Pass flags to updated function signature */
+					count += types[j].f(args, flags);
 					break;
 				}
 			}
-			if (types[j].spec == 0)
-			{
-				count += _putchar('%');
-				count += _putchar(format[i]);
-			}
+			/* ... rest of logic ... */
 		}
 		else
 			count += _putchar(format[i]);
-		i++;
 	}
-	_putchar(-1); /* Final buffer flush */
+	_putchar(-1);
 	va_end(args);
 	return (count);
 }

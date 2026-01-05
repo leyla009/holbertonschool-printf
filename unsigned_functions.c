@@ -37,15 +37,19 @@ int print_octal(va_list args)
 	return (count);
 }
 
-int print_hex_low(va_list args)
+int print_hex_low(va_list args, int flags)i
 {
 	unsigned int n = va_arg(args, unsigned int);
 	int i = 0, count = 0;
 	char hex[32];
 	char *lookup = "0123456789abcdef";
 
-	if (n == 0)
-		return (_putchar('0'));
+
+	if (n != 0 && (flags & 4)) /* # flag */
+	{
+		count += _putchar('0');
+		count += _putchar('x');
+	}
 	while (n > 0)
 	{
 		hex[i++] = lookup[n % 16];

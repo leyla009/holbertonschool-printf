@@ -3,9 +3,10 @@
 /**
  * print_int - Prints an integer
  * @args: va_list containing the integer to print
+ * @flags: active flags (1: +, 2: space)
  * Return: Number of characters printed
  */
-int print_int(va_list args)
+int print_int(va_list args, int flags)
 {
 	int n = va_arg(args, int);
 	unsigned int num;
@@ -20,6 +21,10 @@ int print_int(va_list args)
 	}
 	else
 	{
+		if (flags & 1) /* + flag */
+			count += _putchar('+');
+		else if (flags & 2) /* space flag */
+			count += _putchar(' ');
 		num = n;
 	}
 

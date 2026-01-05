@@ -16,6 +16,9 @@ typedef struct specifier
 	int (*f)(va_list);
 } spec_t;
 
+int print_int(va_list args, int flags);
+int print_hex_low(va_list args, int flags);
+
 /* --- Task 5: Buffer Management & Main Engine --- */
 
 int _putchar(char c);
