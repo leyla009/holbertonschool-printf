@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _printf - prints formatted output
+ * _printf - prints formatted output to stdout
  * @format: format string
  *
  * Return: number of characters printed
@@ -21,7 +21,11 @@ int _printf(const char *format, ...)
     {
         if (*p == '%')
         {
-            p++;
+            p++; /* move to the next character */
+
+            if (!*p) /* if % is the last character, do nothing */
+                break;
+
             if (*p == 'c')
             {
                 char c = (char)va_arg(args, int);
@@ -45,13 +49,7 @@ int _printf(const char *format, ...)
                 write(1, "%", 1);
                 count++;
             }
-            else
-            {
-                /* For unknown specifiers, just print % and the character */
-                write(1, "%", 1);
-                write(1, p, 1);
-                count += 2;
-            }
+            /* unknown specifiers are ignored completely */
         }
         else
         {
