@@ -1,64 +1,61 @@
 #include "main.h"
 
 /**
- * _printf - prints formatted output to stdout
+ * _printf - produces output according to a format
  * @format: format string
  *
- * Return: number of characters printed
+ * Return: number of characters printed, or -1 on error
  */
 int _printf(const char *format, ...)
 {
-    va_list args;
-    int count = 0;
-    const char *p;
+	va_list ap;
+	int count;
+	unsigned int i;
+	int (*f)(va_list);
 
-    if (!format)
-        return (-1);
+	if (format == NULL)
+	{
+		return (-1);
+	}
 
-    va_start(args, format);
+	va_start(ap, format);
 
-    for (p = format; *p; p++)
-    {
-        if (*p == '%')
-        {
-            p++; /* move to the next character */
+	count = 0;
+	i = 0;
+	while (format[i] != '\0')
+	{
+		if (format[i] != '%')
+		{
+			_putchar(format[i]);
+			++count;
+			++i;
+			continue;
+		}
 
-            if (!*p) /* if % is the last character, do nothing */
-                break;
+		++i;
 
-            if (*p == 'c')
-            {
-                char c = (char)va_arg(args, int);
-                write(1, &c, 1);
-                count++;
-            }
-            else if (*p == 's')
-            {
-                char *s = va_arg(args, char *);
-                if (!s)
-                    s = "(null)";
-                while (*s)
-                {
-                    write(1, s, 1);
-                    s++;
-                    count++;
-                }
-            }
-            else if (*p == '%')
-            {
-                write(1, "%", 1);
-                count++;
-            }
-            /* unknown specifiers are ignored completely */
-        }
-        else
-        {
-            write(1, p, 1);
-            count++;
-        }
-    }
+		if (format[i] == '\0')
+		{
+			va_end(ap);
+			return (-1);
+		}
 
-    va_end(args);
-    return (count);
+		f = get_specifier(format[i]);
+
+		if (f != NULL)
+		{
+			count += f(ap);
+		}
+		else
+		{
+			_putchar('%');
+			_putchar(format[i]);
+			count += 2;
+		}
+
+		++i;
+	}
+
+	va_end(ap);
+	return (count);
 }
-
