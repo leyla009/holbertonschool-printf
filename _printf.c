@@ -44,7 +44,10 @@ int _printf(const char *format, ...)
 		i++;
 	}
 	va_end(args);
-	return (count);
+	/* Flush the buffer before returning */
+        _putchar(-1); 
+    
+      return (printed_chars);
 }
 
 /**
