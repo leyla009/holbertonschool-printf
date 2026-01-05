@@ -7,8 +7,8 @@
 
 /**
  * struct specifier - Struct for specifiers
- * @spec: The character specifier
- * @f: The function pointer associated
+ * @spec: The character specifier (e.g., 'd', 's')
+ * @f: The function pointer associated, accepting flags, width, and length
  */
 typedef struct specifier
 {
@@ -20,17 +20,22 @@ typedef struct specifier
 int _putchar(char c);
 int _printf(const char *format, ...);
 
-/* Specifier Functions (All with flags,  length and width) */
-int print_char(va_list args, int flags, int length, int width);
-int print_string(va_list args, int flags, int length, int width);
-int print_percent(va_list args, int flags, int length, int width);
-int print_int(va_list args, int flags, int length, int width);
-int print_binary(va_list args, int flags, int length, int width);
-int print_unsigned(va_list args, int flags, int length, int width);
-int print_octal(va_list args, int flags, int length, int width);
-int print_hex_low(va_list args, int flags, int length, int width);
-int print_hex_upp(va_list args, int flags, int length, int width);
-int print_S(va_list args, int flags, int length, int width);
-int print_pointer(va_list args, int flags, int length, int width);
+/* Helper for Unsigned Casting (Task 9) */
+unsigned long int get_unsigned_val(va_list args, int len);
 
-#endif
+/* Specifier Functions (Task 0 - 14) */
+/* Signature: (va_list args, int flags, int width, int length) */
+
+int print_char(va_list args, int flags, int width, int length);
+int print_string(va_list args, int flags, int width, int length);
+int print_percent(va_list args, int flags, int width, int length);
+int print_int(va_list args, int flags, int width, int length);
+int print_binary(va_list args, int flags, int width, int length);
+int print_unsigned(va_list args, int flags, int width, int length);
+int print_octal(va_list args, int flags, int width, int length);
+int print_hex_low(va_list args, int flags, int width, int length);
+int print_hex_upp(va_list args, int flags, int width, int length);
+int print_S(va_list args, int flags, int width, int length);
+int print_pointer(va_list args, int flags, int width, int length);
+
+#endif /* MAIN_H */
