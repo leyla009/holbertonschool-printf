@@ -33,7 +33,7 @@ int _printf(const char *format, ...)
 					break;
 				}
 			}
-			if (types[j].spec == 0) /* No match found */
+			if (types[j].spec == 0)
 			{
 				count += _putchar('%');
 				count += _putchar(format[i]);
@@ -43,21 +43,7 @@ int _printf(const char *format, ...)
 			count += _putchar(format[i]);
 		i++;
 	}
+	_putchar(-1); /* The buffer flush for Task 5 */
 	va_end(args);
-	/* Flush the buffer before returning */
-        _putchar(-1); 
-    
-      return (printed_chars);
-}
-
-/**
- * flush_buffer - Prints buffer contents to stdout and resets index
- * @buffer: array of chars
- * @buff_ind: pointer to current index
- */
-void flush_buffer(char *buffer, int *buff_ind)
-{
-	if (*buff_ind > 0)
-		write(1, buffer, *buff_ind);
-	*buff_ind = 0;
+	return (count);
 }
