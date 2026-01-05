@@ -1,17 +1,23 @@
 #include "main.h"
 
 /**
- * _printf - custom printf function
- * @format: format string
- * Return: number of characters printed
+ * _printf - custom printf function that produces output according to a format
+ * @format: character string containing zero or more directives
+ *
+ * Return: the number of characters printed (excluding the null byte)
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0, j, count = 0;
 	spec_t specs[] = {
-		{'c', print_char}, {'s', print_string}, {'%', print_percent},
-		{'d', print_int}, {'i', print_int}, {0, NULL}
+		{'c', print_char},
+		{'s', print_string},
+		{'%', print_percent},
+		{'d', print_int},
+		{'i', print_int},
+		{'b', print_binary},
+		{0, NULL}
 	};
 
 	if (!format || (format[0] == '%' && !format[1]))
