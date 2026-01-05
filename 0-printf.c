@@ -1,4 +1,5 @@
-#include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
  * _printf - prints formatted output to stdout
@@ -21,9 +22,9 @@ int _printf(const char *format, ...)
     {
         if (*p == '%')
         {
-            p++;  /* move to next character */
+            p++; /* move to next character */
 
-            if (!*p) /* trailing % at end: print nothing */
+            if (!*p) /* trailing % at end of string: print nothing */
                 break;
 
             if (*p == 'c')
@@ -49,9 +50,11 @@ int _printf(const char *format, ...)
                 write(1, "%", 1);
                 count++;
             }
-            /* UNKNOWN SPECIFIERS ARE COMPLETELY IGNORED */
             else
-                continue; /* skip unknown specifier */
+            {
+                /* unknown specifier: skip, do NOT print % */
+                continue;
+            }
         }
         else
         {
@@ -63,4 +66,4 @@ int _printf(const char *format, ...)
     va_end(args);
     return (count);
 }
-
+  
