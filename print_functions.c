@@ -6,9 +6,10 @@
  * @flags: active flags (unused)
  * Return: 1
  */
-int print_char(va_list args, int flags)
+int print_char(va_list args, int flags, int length)
 {
 	(void)flags;
+	(void)length;
 	return (_putchar(va_arg(args, int)));
 }
 
@@ -18,12 +19,12 @@ int print_char(va_list args, int flags)
  * @flags: active flags (unused)
  * Return: number of chars printed
  */
-int print_string(va_list args, int flags)
+int print_string(va_list args, int flags, int length)
 {
 	char *s = va_arg(args, char *);
 	int i, count = 0;
 	(void)flags;
-
+	(void)length;
 	if (!s)
 		s = "(null)";
 	for (i = 0; s[i]; i++)
@@ -37,10 +38,11 @@ int print_string(va_list args, int flags)
  * @flags: active flags (unused)
  * Return: 1
  */
-int print_percent(va_list args, int flags)
+int print_percent(va_list args, int flags, int length)
 {
 	(void)args;
 	(void)flags;
+	(void)length;
 	return (_putchar('%'));
 }
 
@@ -50,13 +52,13 @@ int print_percent(va_list args, int flags)
  * @flags: active flags (unused)
  * Return: number of chars printed
  */
-int print_binary(va_list args, int flags)
+int print_binary(va_list args, int flags, int length)
 {
 	unsigned int n = va_arg(args, unsigned int);
 	int i = 0, count = 0;
 	char binary[64];
 	(void)flags;
-
+	(void)length;
 	if (n == 0)
 		return (_putchar('0'));
 	while (n > 0)

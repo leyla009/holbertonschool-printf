@@ -6,7 +6,7 @@
  * @flags: active flags
  * Return: Number of characters printed
  */
-int print_pointer(va_list args, int flags)
+int print_pointer(va_list args, int flags, int length)
 {
 	void *p = va_arg(args, void *);
 	unsigned long int addr;
@@ -14,6 +14,7 @@ int print_pointer(va_list args, int flags)
 	char *hex = "0123456789abcdef";
 	int i = 0, count = 0;
 	(void)flags;
+	(void)length;
 
 	if (p == NULL)
 	{
