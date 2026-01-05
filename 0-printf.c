@@ -21,9 +21,9 @@ int _printf(const char *format, ...)
     {
         if (*p == '%')
         {
-            p++; /* move to the next character */
+            p++;  /* move to next character */
 
-            if (!*p) /* if % is the last character, do nothing */
+            if (!*p) /* trailing % at end: print nothing */
                 break;
 
             if (*p == 'c')
@@ -49,7 +49,9 @@ int _printf(const char *format, ...)
                 write(1, "%", 1);
                 count++;
             }
-            /* unknown specifiers are ignored completely */
+            /* UNKNOWN SPECIFIERS ARE COMPLETELY IGNORED */
+            else
+                continue; /* skip unknown specifier */
         }
         else
         {
