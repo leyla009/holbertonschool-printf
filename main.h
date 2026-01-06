@@ -45,4 +45,7 @@ int print_S(va_list args, int f, int w, int precision, int l);
 /* Pointer Functions (pointer_functions.c) */
 int print_pointer(va_list args, int f, int w, int precision, int l);
 
+
+int print_rev(va_list args, int f, int w, int precision, int l);
+
 #endif /* MAIN_H */
