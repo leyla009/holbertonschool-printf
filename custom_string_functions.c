@@ -3,16 +3,19 @@
 /**
  * print_S - Prints string with hex for non-printables
  * @args: va_list
- * @flags: active flags (unused)
+ * @f: active flags (unused)
+ * @w: width
+ * @precision: precision
+ * @l: length
  * Return: number of chars printed
  */
-int print_S(va_list args, int f, int w, int p, int l) 
+int print_S(va_list args, int f, int w, int precision, int l) 
 {
 	char *s = va_arg(args, char *);
 	int i, count = 0;
 	char *hex = "0123456789ABCDEF";
 
-	(void)f; (void) w; (void)p; (void)l;
+	(void)f; (void) w; (void)precision; (void)l;
 
 	if (!s)
 		s = "(null)";
