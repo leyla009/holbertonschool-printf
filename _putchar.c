@@ -1,10 +1,5 @@
-#include "main.h"
+#include <unistd.h>
 
-/**
- * _putchar - writes the character c to a static buffer
- * @c: The character to print. If -1, flushes the buffer.
- * Return: 1
- */
 int _putchar(char c)
 {
 	static char buffer[1024];
@@ -15,12 +10,10 @@ int _putchar(char c)
 		write(1, buffer, i);
 		i = 0;
 	}
-
 	if (c != -1)
 	{
-		buffer[i] = c;
-		i++;
+		buffer[i++] = c;
+		return (1);
 	}
-
-	return (1);
+	return (0);
 }

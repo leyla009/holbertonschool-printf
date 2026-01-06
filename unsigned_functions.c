@@ -13,18 +13,25 @@ unsigned long int get_unsigned_val(va_list args, int len)
 }
 
 /**
- * print_unsigned - Prints unsigned int with width
+ * print_unsigned - Prints unsigned int with width and precision
  */
-int print_unsigned(va_list args, int flags, int width, int length)
+int print_unsigned(va_list args, int f, int w, int p, int l)
 {
-	unsigned long int n = get_unsigned_val(args, length);
+	unsigned long int n = get_unsigned_val(args, l);
 	unsigned long int div = 1, temp = n;
-	int count = 0, n_len = 0;
-	(void)flags;
+	int count = 0, n_len = 0, p_zeros = 0, total_len;
+
+	(void)f;
+	if (n == 0 && p == 0) return (0);
 
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 10; n_len++; }
-	while (width > n_len) { count += _putchar(' '); width--; }
+
+	if (p > n_len) p_zeros = p - n_len;
+	total_len = n_len + p_zeros;
+
+	while (w > total_len) { count += _putchar(' '); w--; }
+	while (p_zeros-- > 0) count += _putchar('0');
 
 	while (n / div > 9) div *= 10;
 	while (div != 0)
@@ -37,69 +44,84 @@ int print_unsigned(va_list args, int flags, int width, int length)
 }
 
 /**
- * print_octal - Prints octal with width and # flag
+ * print_octal - Prints octal with width, precision, and # flag
  */
-int print_octal(va_list args, int flags, int width, int length)
+int print_octal(va_list args, int f, int w, int p, int l)
 {
-	unsigned long int n = get_unsigned_val(args, length);
+	unsigned long int n = get_unsigned_val(args, l);
 	unsigned long int temp = n;
-	int i = 0, count = 0, n_len = 0;
+	int i = 0, count = 0, n_len = 0, p_zeros = 0, total_len;
 	char octal[32];
 
+	if (n == 0 && p == 0) return (0);
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 8; n_len++; }
-	if (n != 0 && (flags & 4)) n_len++; /* Account for '#' flag '0' prefix */
 
-	while (width > n_len) { count += _putchar(' '); width--; }
-	if (n != 0 && (flags & 4)) count += _putchar('0');
-	if (n == 0) return (count + _putchar('0'));
+	if (p > n_len) p_zeros = p - n_len;
+	total_len = n_len + p_zeros;
+	if (n != 0 && (f & 4)) total_len++;
 
+	while (w > total_len) { count += _putchar(' '); w--; }
+	if (n != 0 && (f & 4)) count += _putchar('0');
+	while (p_zeros-- > 0) count += _putchar('0');
+
+	if (n == 0 && p != 0) return (count + _putchar('0'));
 	while (n > 0) { octal[i++] = (n % 8) + '0'; n /= 8; }
 	for (i--; i >= 0; i--) count += _putchar(octal[i]);
 	return (count);
 }
 
 /**
- * print_hex_low - Prints lowercase hex with width and # flag
+ * print_hex_low - Prints lowercase hex with width, precision, and # flag
  */
-int print_hex_low(va_list args, int flags, int width, int length)
+int print_hex_low(va_list args, int f, int w, int p, int l)
 {
-	unsigned long int n = get_unsigned_val(args, length);
+	unsigned long int n = get_unsigned_val(args, l);
 	unsigned long int temp = n;
-	int i = 0, count = 0, n_len = 0;
+	int i = 0, count = 0, n_len = 0, p_zeros = 0, total_len;
 	char hex[32], *lookup = "0123456789abcdef";
 
+	if (n == 0 && p == 0) return (0);
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 16; n_len++; }
-	if (n != 0 && (flags & 4)) n_len += 2; /* Account for '0x' */
 
-	while (width > n_len) { count += _putchar(' '); width--; }
-	if (n != 0 && (flags & 4)) { count += _putchar('0'); count += _putchar('x'); }
-	if (n == 0) return (count + _putchar('0'));
+	if (p > n_len) p_zeros = p - n_len;
+	total_len = n_len + p_zeros;
+	if (n != 0 && (f & 4)) total_len += 2;
 
+	while (w > total_len) { count += _putchar(' '); w--; }
+	if (n != 0 && (f & 4)) { count += _putchar('0'); count += _putchar('x'); }
+	while (p_zeros-- > 0) count += _putchar('0');
+
+	if (n == 0 && p != 0) return (count + _putchar('0'));
 	while (n > 0) { hex[i++] = lookup[n % 16]; n /= 16; }
 	for (i--; i >= 0; i--) count += _putchar(hex[i]);
 	return (count);
 }
 
 /**
- * print_hex_upp - Prints uppercase hex with width and # flag
+ * print_hex_upp - Prints uppercase hex with width, precision, and # flag
  */
-int print_hex_upp(va_list args, int flags, int width, int length)
+int print_hex_upp(va_list args, int f, int w, int p, int l)
 {
-	unsigned long int n = get_unsigned_val(args, length);
+	unsigned long int n = get_unsigned_val(args, l);
 	unsigned long int temp = n;
-	int i = 0, count = 0, n_len = 0;
+	int i = 0, count = 0, n_len = 0, p_zeros = 0, total_len;
 	char hex[32], *lookup = "0123456789ABCDEF";
 
+	if (n == 0 && p == 0) return (0);
 	if (n == 0) n_len = 1;
 	while (temp > 0) { temp /= 16; n_len++; }
-	if (n != 0 && (flags & 4)) n_len += 2; /* Account for '0X' */
 
-	while (width > n_len) { count += _putchar(' '); width--; }
-	if (n != 0 && (flags & 4)) { count += _putchar('0'); count += _putchar('X'); }
-	if (n == 0) return (count + _putchar('0'));
+	if (p > n_len) p_zeros = p - n_len;
+	total_len = n_len + p_zeros;
+	if (n != 0 && (f & 4)) total_len += 2;
 
+	while (w > total_len) { count += _putchar(' '); w--; }
+	if (n != 0 && (f & 4)) { count += _putchar('0'); count += _putchar('X'); }
+	while (p_zeros-- > 0) count += _putchar('0');
+
+	if (n == 0 && p != 0) return (count + _putchar('0'));
 	while (n > 0) { hex[i++] = lookup[n % 16]; n /= 16; }
 	for (i--; i >= 0; i--) count += _putchar(hex[i]);
 	return (count);
