@@ -1,46 +1,70 @@
 #include "main.h"
 
 /**
- * print_pointer - Prints the value of a pointer variable
- * @args: va_list containing the pointer to print
+ * print_pointer - Prints an address in hex format
+ * @args: va_list of arguments
  * @f: flags
  * @w: width
- * @precision: precision (unused for pointer but required for signature)
+ * @precision: precision
  * @l: length modifier
  * Return: Number of characters printed
  */
 int print_pointer(va_list args, int f, int w, int precision, int l)
 {
-	void *ptr = va_arg(args, void *);
-	unsigned long int addr;
-	char buffer[16];
+	void *addr = va_arg(args, void *);
+	unsigned long int ptr_val;
 	char *hex = "0123456789abcdef";
-	int i = 0, count = 0;
-	
-	(void)f; 
-	(void)w; 
-	(void)precision; 
-	(void)l;
+	char buffer[20];
+	int i = 0, count = 0, len = 0;
+	char *nil = "(nil)";
 
-	if (!ptr)
+	(void)precision; (void)l;
+
+	if (!addr)
 	{
-		char *nil = "(nil)";
-		while (nil[count])
-			_putchar(nil[count++]);
+		while (nil[len]) len++;
+		if (!(f & 16)) /* Right align padding */
+			while (w > len) { count += _putchar(' '); w--; }
+		for (i = 0; nil[i]; i++) count += _putchar(nil[i]);
+		if (f & 16) /* Left align padding (-) */
+			while (w > len) { count += _putchar(' '); w--; }
 		return (count);
 	}
 
-	addr = (unsigned long int)ptr;
+	ptr_val = (unsigned long int)addr;
+	/* Convert address to hex string in buffer */
+	do {
+		buffer[i++] = hex[ptr_val % 16];
+		ptr_val /= 16;
+	} while (ptr_val > 0);
+
+	len = i + 2; /* +2 for '0x' */
+
+	/* Right Alignment Padding */
+	if (!(f & 16))
+	{
+		while (w > len)
+		{
+			count += _putchar(' ');
+			w--;
+		}
+	}
+
+	/* Print prefix and hex address */
 	count += _putchar('0');
 	count += _putchar('x');
-
-	while (addr > 0)
-	{
-		buffer[i++] = hex[addr % 16];
-		addr /= 16;
-	}
 	for (i--; i >= 0; i--)
 		count += _putchar(buffer[i]);
+
+	/* Left Alignment Padding (-) */
+	if (f & 16)
+	{
+		while (w > len)
+		{
+			count += _putchar(' ');
+			w--;
+		}
+	}
 
 	return (count);
 }
