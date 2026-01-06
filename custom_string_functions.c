@@ -6,14 +6,13 @@
  * @flags: active flags (unused)
  * Return: number of chars printed
  */
-int print_S(va_list args, int flags, int length, int width) 
+int print_S(va_list args, int f, int w, int p, int l) 
 {
 	char *s = va_arg(args, char *);
 	int i, count = 0;
 	char *hex = "0123456789ABCDEF";
-	(void)flags;
-	(void)length;
-	(void)width;
+
+	(void)f; (void) w; (void)p; (void)l;
 
 	if (!s)
 		s = "(null)";
