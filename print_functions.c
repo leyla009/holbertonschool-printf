@@ -31,7 +31,7 @@ int print_string(va_list args, int f, int w, int precision, int l)
 		s = "(null)";
 	while (s[len]) 
 		len++;
-	if (p >= 0 && p < len) len = precision;
+	if (precision >= 0 && precision < len) len = precision;
 
 	if (precision >= 0 && precision < len)
 		len = precision;
