@@ -1,5 +1,15 @@
 #include "main.h"
 
+/**
+ * print_string - Prints a string with width and precision
+ * @args: va_list
+ * @f: flags
+ * @w: width
+ * @precision: precision (renamed from p)
+ * @l: length
+ * Return: number of characters printed
+ */
+
 int print_char(va_list args, int f, int w, int precision, int l)
 {
 	int count = 0;
@@ -14,11 +24,14 @@ int print_string(va_list args, int f, int w, int precision, int l)
 {
 	char *s = va_arg(args, char *);
 	int i, len = 0, count = 0;
-	(void)f; (void)l;
+	(void)f; 
+	(void)l;
 
-	if (!s) s = "(null)";
-	while (s[len]) len++;
-	if (p >= 0 && p < len) len = p;
+	if (!s) 
+		s = "(null)";
+	while (s[len]) 
+		len++;
+	if (p >= 0 && p < len) len = precision;
 
 	if (precision >= 0 && precision < len)
 		len = precision;
