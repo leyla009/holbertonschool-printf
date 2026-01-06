@@ -22,11 +22,11 @@ int print_pointer(va_list args, int f, int w, int precision, int l)
 	(void)precision; 
 	(void)l;
 
-	if (!p)
+	if (!ptr)
 	{
-		char *s = "(nil)";
-		while (s[count])
-			_putchar(s[count++]);
+		char *nil = "(nil)";
+		while (nil[count])
+			_putchar(nil[count++]);
 		return (count);
 	}
 
