@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_string - Prints a string with width and precision
+ * print_binary - Prints an unsigned int in binary
  * @args: va_list
  * @f: flags
  * @w: width
@@ -10,6 +10,31 @@
  * Return: number of characters printed
  */
 
+int print_binary(va_list args, int f, int w, int precision, int l)
+{
+	unsigned int n = va_arg(args, unsigned int);
+	int i = 0, count = 0;
+	char binary[64];
+
+	(void)f;
+	(void)w;
+	(void)precision;
+	(void)l;
+
+	if (n == 0)
+		return (_putchar('0'));
+
+	while (n > 0)
+	{
+		binary[i++] = (n % 2) + '0';
+		n /= 2;
+	}
+
+	for (i--; i >= 0; i--)
+		count += _putchar(binary[i]);
+
+	return (count);
+}
 int print_char(va_list args, int f, int w, int precision, int l)
 {
 	int count = 0;
