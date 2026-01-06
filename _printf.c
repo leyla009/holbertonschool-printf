@@ -19,15 +19,16 @@ int _printf(const char *format, ...)
 		{
 			flags = 0; width = 0; precision = -1; length = 0;
 			while (format[i + 1] == '+' || format[i + 1] == ' ' || 
-			       format[i + 1] == '#' || format[i + 1] == '0')
+			       format[i + 1] == '#' || format[i + 1] == '0' || format[i + 1] == '-')
 			{
 				i++;
 				if (format[i] == '+') flags |= 1;      /* + */
 				else if (format[i] == ' ') flags |= 2; /* space */
 				else if (format[i] == '#') flags |= 4; /* # */
-				else if (format[i] == '0') flags |= 8; /* 0 flag */
+				else if (format[i] == '0') flags |= 8; /* 0 */
+				else if (format[i] == '-') flags |= 16;/* - (Left Align) */
 			}
-			/* Width, Precision, and Length Parsing remains same... */
+			/* Width, Precision, Length parsing logic remains the same */
 			if (format[i + 1] == '*') { width = va_arg(args, int); i++; }
 			else while (format[i + 1] >= '0' && format[i + 1] <= '9')
 				width = (width * 10) + (format[++i] - '0');

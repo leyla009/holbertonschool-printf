@@ -35,33 +35,42 @@ int print_binary(va_list args, int f, int w, int precision, int l)
 
 	return (count);
 }
+
 int print_char(va_list args, int f, int w, int precision, int l)
 {
-	int count = 0;
 	char c = va_arg(args, int);
-	
+	int count = 0;
 	(void)f; (void)precision; (void)l;
-	while (w > 1) { count += _putchar(' '); w--; }
-	return (count + _putchar(c));
+
+	if (!(f & 16)) /* Right align (default) */
+		while (w > 1) { count += _putchar(' '); w--; }
+
+	count += _putchar(c);
+
+	if (f & 16) /* Left align (-) */
+		while (w > 1) { count += _putchar(' '); w--; }
+
+	return (count);
 }
 
 int print_string(va_list args, int f, int w, int precision, int l)
 {
 	char *s = va_arg(args, char *);
 	int i, len = 0, count = 0;
-	(void)f; 
 	(void)l;
 
-	if (!s) 
-		s = "(null)";
-	while (s[len]) 
-		len++;
+	if (!s) s = "(null)";
+	while (s[len]) len++;
 	if (precision >= 0 && precision < len) len = precision;
 
-	if (precision >= 0 && precision < len)
-		len = precision;
-	while (w > len) { count += _putchar(' '); w--; }
+	if (!(f & 16)) /* Right align */
+		while (w > len) { count += _putchar(' '); w--; }
+
 	for (i = 0; i < len; i++) count += _putchar(s[i]);
+
+	if (f & 16) /* Left align (-) */
+		while (w > len) { count += _putchar(' '); w--; }
+
 	return (count);
 }
 
