@@ -39,15 +39,7 @@ int print_S(va_list args, int f, int w, int precision, int l)
 	return (count);
 }
 
-/**
- * print_rev - Prints a string in reverse
- * @args: va_list of arguments
- * @f: flags
- * @w: width
- * @precision: precision
- * @l: length modifier
- * Return: Number of characters printed
- */
+
 int print_rev(va_list args, int f, int w, int precision, int l)
 {
 	char *s = va_arg(args, char *);
@@ -85,5 +77,34 @@ int print_rev(va_list args, int f, int w, int precision, int l)
 		}
 	}
 
+	return (count);
+}
+
+/**
+ * print_rot13 - Prints the ROT13'ed string
+ */
+int print_rot13(va_list args, int f, int w, int precision, int l)
+{
+	char *s = va_arg(args, char *);
+	int i, j, count = 0;
+	char in[] =  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
+	(void)f; (void)w; (void)precision; (void)l;
+	if (!s) s = "(ahyy)";
+
+	for (i = 0; s[i]; i++)
+	{
+		for (j = 0; in[j]; j++)
+		{
+			if (s[i] == in[j])
+			{
+				count += _putchar(out[j]);
+				break;
+			}
+		}
+		if (!in[j])
+			count += _putchar(s[i]);
+	}
 	return (count);
 }

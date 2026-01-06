@@ -16,7 +16,7 @@ int _printf(const char *format, ...)
 		{'d', print_int}, {'i', print_int}, {'b', print_binary},
 		{'u', print_unsigned}, {'o', print_octal}, {'x', print_hex_low},
 		{'X', print_hex_upp}, {'S', print_S}, {'p', print_pointer},
-		{'r', print_rev}, {0, NULL}
+		{'r', print_rev}, {'R', print_rot13}, {0, NULL}
 	};
 
 	if (!format || (format[0] == '%' && !format[1]))
@@ -98,7 +98,7 @@ int _printf(const char *format, ...)
 		else
 			count += _putchar(format[i]);
 	}
-	_putchar(-1); /* Flush buffer if your _putchar uses one */
+	_putchar(-1); /* Flush buffer if  _putchar uses one */
 	va_end(args);
 	return (count);
 }

@@ -47,5 +47,6 @@ int print_pointer(va_list args, int f, int w, int precision, int l);
 
 
 int print_rev(va_list args, int f, int w, int precision, int l);
+int print_rot13(va_list args, int f, int w, int precision, int l);
 
 #endif /* MAIN_H */
