@@ -1,3 +1,5 @@
+<img height="50" align="right" src="https://raw.githubusercontent.com/fchavonet/fchavonet/refs/heads/main/assets/images/logo-holberton_school.webp" alt="Holberton School logo">
+
 # Custom C Printf: A Low-Level Formatting Engine
 
 This project is a custom implementation of the C standard library function `printf`. Developed from scratch, this function handles formatted output by parsing format strings and managing variable arguments without using the standard `printf` library. 
